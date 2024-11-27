@@ -1,0 +1,47 @@
+Exp 9
+
+CREATE TABLE Sale1 (
+    Region VARCHAR(50),
+    Country VARCHAR(50),
+    Product VARCHAR(50),
+    SalesDate DATE,
+    Quantity INT,
+    Amount DECIMAL(10, 2)
+);
+
+INSERT INTO Sale1 VALUES
+('North', 'USA', 'Product A', TO_DATE('2022-01-01', 'YYYY-MM-DD'), 10,100.00);
+
+INSERT INTO Sale1 VALUES
+('North', 'USA', 'Product B', TO_DATE('2022-01-15', 'YYYY-MM-DD'), 20, 200.00);
+
+INSERT INTO Sale1 VALUES
+('North', 'Canada', 'Product A', TO_DATE('2022-02-01', 'YYYY-MM-DD'), 15, 150.00);
+
+INSERT INTO Sale1 VALUES
+('South', 'Brazil', 'Product B', TO_DATE('2022-03-01', 'YYYY-MM-DD'), 30, 300.00);
+
+INSERT INTO Sale1 VALUES
+('South', 'Argentina', 'Product A', TO_DATE('2022-04-01', 'YYYY-MM-DD'), 25,250.00);
+
+select * from sale1;
+
+
+
+-- ROLLUP OPERATION
+SELECT Region,
+       Country,
+       SUM(Quantity) AS Total_Quantity,
+       SUM(Amount) AS Total_Amount
+FROM Sale1
+GROUP BY ROLLUP (Region, Country);
+
+
+--CUBE OPERATION
+
+SELECT Region,
+       Country,
+       SUM(Quantity) AS Total_Quantity,
+       SUM(Amount) AS Total_Amount
+FROM Sale1
+GROUP BY CUBE (Region, Country);

@@ -1,0 +1,42 @@
+DECLARE
+    TYPE name_array IS TABLE OF VARCHAR2(50);
+    TYPE grade_array IS TABLE OF VARCHAR2(10);
+    TYPE class_array IS TABLE OF VARCHAR2(20);
+   
+    -- Declare the collections
+    names name_array := name_array();
+    grades grade_array := grade_array();
+    classes class_array := class_array();
+BEGIN
+    -- Extend the collections to hold 5 elements each
+    names.extend(5);
+    grades.extend(5);
+    classes.extend(5);
+   
+    -- Assign values to each collection
+    names(1) := 'Abhilash kale';
+    grades(1) := 'A';
+    classes(1) := 'Sophomore';
+   
+    names(2) := 'Suyash Gaikwad';
+    grades(2) := 'B+';
+    classes(2) := 'Junior';
+   
+    names(3) := 'Shivraj Patil';
+    grades(3) := 'A-';
+    classes(3) := 'Senior';
+   
+    names(4) := 'Vipul Ingale';
+    grades(4) := 'B';
+    classes(4) := 'Freshman';
+   
+    names(5) := 'Bhargav Nikam';
+    grades(5) := 'A+';
+    classes(5) := 'Graduate';
+
+    -- Display students' information
+    DBMS_OUTPUT.PUT_LINE('Student Information:');
+    FOR i IN 1..names.COUNT LOOP
+        DBMS_OUTPUT.PUT_LINE('Name: ' || names(i) || ', Grade: ' || grades(i) || ', Class/Semester: ' || classes(i));
+    END LOOP;
+END;

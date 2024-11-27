@@ -1,0 +1,32 @@
+Exp 7
+
+CREATE TABLE Employee2 (
+    EmployeeID NUMBER PRIMARY KEY,
+    Ename VARCHAR(50),
+    Salary NUMBER,
+    City VARCHAR(50)
+);
+
+CREATE SEQUENCE EMPSEQ
+START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+MAXVALUE 100
+NOCYCLE
+CACHE 20;
+
+
+INSERT INTO Employee2 (EmployeeID, Ename, Salary, City)
+VALUES (EMPSEQ.NEXTVAL, 'Yash', 50000, 'Satara');
+
+INSERT INTO Employee2 (EmployeeID, Ename, Salary, City)
+VALUES (EMPSEQ.NEXTVAL, 'suyash', 60000, 'Wai');
+
+INSERT INTO Employee2 (EmployeeID, Ename, Salary, City)
+VALUES (EMPSEQ.NEXTVAL, 'Shivraj', 70000, 'Kolhapur');
+
+
+
+SELECT * FROM Employee2;
+
+DELETE FROM Employee2 WHERE EmployeeID = 1;

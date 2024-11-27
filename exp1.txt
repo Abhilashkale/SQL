@@ -1,0 +1,113 @@
+CREATE TABLE Student2 (
+    IDCardnumber INT PRIMARY KEY,
+    RollNumber INT UNIQUE,
+    Stud_Name VARCHAR(100),
+    Class VARCHAR(50),
+    Branch VARCHAR(50)
+);
+
+INSERT INTO Student2 (IDCardnumber, RollNumber, Stud_Name, Class, Branch) 
+VALUES (1, 101, 'John Doe', '10A', 'CSE');
+
+INSERT INTO Student2 (IDCardnumber, RollNumber, Stud_Name, Class, Branch) 
+VALUES (2, 102, 'Jane Smith', '10B', 'ECE');
+
+INSERT INTO Student2 (IDCardnumber, RollNumber, Stud_Name, Class, Branch) 
+VALUES (3, 103, 'Alice Brown', '10A', 'CSE');
+
+INSERT INTO Student2 (IDCardnumber, RollNumber, Stud_Name, Class, Branch) 
+VALUES (4, 104, 'Bob White', '10B', 'MECH');
+
+select * from student2;
+
+
+CREATE TABLE Book2 (
+    BookID INT PRIMARY KEY,
+    Book_Name VARCHAR(100),
+    Author VARCHAR(100),
+    Price DECIMAL(10, 2)
+);
+
+
+INSERT INTO Book2 (BookID, Book_Name, Author, Price) VALUES
+(1, 'Database Systems', 'C.J. Date', 50.00);
+
+INSERT INTO Book2 (BookID, Book_Name, Author, Price) VALUES
+(2, 'Introduction to Algorithms', 'Thomas H. Cormen', 75.00);
+
+INSERT INTO Book2 (BookID, Book_Name, Author, Price) VALUES
+(3, 'Artificial Intelligence', 'Stuart Russell', 100.00);
+
+INSERT INTO Book2 (BookID, Book_Name, Author, Price) VALUES
+(4, 'Computer Networks', 'Andrew S. Tanenbaum', 60.00);
+
+
+select * from Book2;
+
+
+
+CREATE TABLE Issue2 (
+    IDCardnumber INT,
+    BookID INT,
+    IssueDate DATE,
+    SubmissionDate DATE,
+    PRIMARY KEY (IDCardnumber, BookID),
+    FOREIGN KEY (IDCardnumber) REFERENCES Student(IDCardnumber),
+    FOREIGN KEY (BookID) REFERENCES Book(BookID)
+);
+
+
+INSERT INTO Issue2 (IDCardnumber, BookID, IssueDate, SubmissionDate) VALUES
+(1, 1, TO_DATE('2024-10-01', 'YYYY-MM-DD'), TO_DATE('2024-10-15', 'YYYY-MM-DD'));
+
+INSERT INTO Issue2 (IDCardnumber, BookID, IssueDate, SubmissionDate) VALUES
+(3, 2, TO_DATE('2024-10-03', 'YYYY-MM-DD'), TO_DATE('2024-10-17', 'YYYY-MM-DD'));
+
+INSERT INTO Issue2 (IDCardnumber, BookID, IssueDate, SubmissionDate) VALUES
+(2, 3, TO_DATE('2024-10-05', 'YYYY-MM-DD'), TO_DATE('2024-10-19', 'YYYY-MM-DD'));
+
+
+select * from Issue2;
+
+
+1)
+
+SELECT COUNT(DISTINCT Student.IDCardnumber) AS Total_CSE_Students_Issued
+FROM Student
+JOIN Issue ON Student.IDCardnumber = Issue.IDCardnumber
+WHERE Student.Branch = 'CSE';
+
+
+2)
+
+SELECT * 
+FROM Student2 
+WHERE IDCardnumber NOT IN (
+    SELECT IDCardnumber 
+    FROM Issue2
+);
+
+
+3)
+
+SELECT BookID, Book_Name, Author, Price
+FROM (
+    SELECT BookID, Book_Name, Author, Price,
+           ROW_NUMBER() OVER (ORDER BY Price DESC) AS rn
+    FROM Book2
+)
+WHERE rn = 2;
+
+
+4)
+
+SELECT Student.Branch, COUNT(DISTINCT Student.IDCardnumber) AS Students_Issued
+FROM Student
+JOIN Issue ON Student.IDCardnumber = Issue.IDCardnumber
+GROUP BY Student.Branch;
+
+5)
+SELECT Book.Book_Name, Student.Stud_Name, Issue.IssueDate, Issue.SubmissionDate
+FROM Issue
+JOIN Student ON Issue.IDCardnumber = Student.IDCardnumber
+JOIN Book ON Issue.BookID = Book.BookID;

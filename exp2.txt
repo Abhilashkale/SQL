@@ -1,0 +1,28 @@
+
+
+1)  Find the sum of “N” numbers.
+
+DECLARE 
+  N NUMBER := 5;
+  sum_result NUMBER := 0;  
+  i NUMBER; 
+BEGIN 
+  FOR i IN 1..N LOOP 
+    sum_result := sum_result + i; 
+  END LOOP; 
+  DBMS_OUTPUT.PUT_LINE('The sum of numbers from 1 to ' || N || ' is: ' || sum_result); 
+END;
+
+2) Find the Factorial of a given number.
+
+DECLARE
+  num NUMBER := 5; -- Change this value to compute the factorial of a different number
+  factorial_result NUMBER := 1;
+  i NUMBER;
+BEGIN
+  FOR i IN 1..num LOOP
+    factorial_result := factorial_result * i;
+  END LOOP;
+  
+  DBMS_OUTPUT.PUT_LINE('The factorial of ' || num || ' is: ' || factorial_result);
+END;

@@ -1,0 +1,21 @@
+Exp 3
+
+
+DECLARE
+    area NUMBER;              
+    radius NUMBER := 5;  
+    base NUMBER := 8;
+    height NUMBER := 10;
+    choice NUMBER := 1;  -- Direct assignment (change this as needed)
+BEGIN
+    CASE choice
+        WHEN 1 THEN
+            area := 3.14*radius*radius;
+            DBMS_OUTPUT.PUT_LINE('Area of Circle is: ' || area);
+        WHEN 2 THEN
+            area := 0.5*base*height;
+            DBMS_OUTPUT.PUT_LINE('Area of Triangle is: ' || area);
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('INVALID CHOICE');
+    END CASE;
+END;

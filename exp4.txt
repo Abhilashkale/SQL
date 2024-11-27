@@ -1,0 +1,66 @@
+Exp 4
+
+
+CREATE OR REPLACE TYPE Rectangle AS OBJECT (
+  length NUMBER,
+  width NUMBER,
+ 
+  CONSTRUCTOR FUNCTION Rectangle(length NUMBER, width NUMBER) RETURN SELF AS RESULT,
+
+  MEMBER FUNCTION CalArea RETURN NUMBER,
+
+  MEMBER FUNCTION CalPerimeter RETURN NUMBER
+);
+
+
+
+CREATE OR REPLACE TYPE BODY Rectangle AS
+
+  CONSTRUCTOR FUNCTION Rectangle(length NUMBER, width NUMBER) RETURN SELF AS RESULT IS
+  BEGIN
+    SELF.length := length;
+    SELF.width := width;
+    RETURN;
+  END;
+
+
+  MEMBER FUNCTION CalArea RETURN NUMBER IS
+  BEGIN
+    RETURN SELF.length * SELF.width;
+  END;
+
+  
+  MEMBER FUNCTION CalPerimeter RETURN NUMBER IS
+  BEGIN
+    RETURN 2 * (SELF.length + SELF.width);
+  END;
+
+END;
+
+
+DECLARE
+  rect Rectangle;
+BEGIN
+  -- Create a rectangle object with length 8 and width 10
+  rect := Rectangle(8, 10);
+ 
+  -- Display the area
+  DBMS_OUTPUT.PUT_LINE('Area: ' || rect.CalArea);
+
+  -- Display the perimeter
+  DBMS_OUTPUT.PUT_LINE('Perimeter: ' || rect.CalPerimeter);
+END;
+
+
+DECLARE
+  rect Rectangle;
+BEGIN
+  -- Create a rectangle object with length 8 and width 10
+  rect := Rectangle(8, 10);
+ 
+  -- Display the area
+  DBMS_OUTPUT.PUT_LINE('Area: ' || rect.CalArea);
+
+  -- Display the perimeter
+  DBMS_OUTPUT.PUT_LINE('Perimeter: ' || rect.CalPerimeter);
+END;

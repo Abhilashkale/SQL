@@ -1,0 +1,133 @@
+Create tables
+CREATE TABLE Location (
+LID INT PRIMARY KEY,
+City VARCHAR(50),
+State VARCHAR(50),
+Country VARCHAR(50)
+);
+
+
+CREATE TABLE Product (
+PID INT PRIMARY KEY,
+Pname VARCHAR(100),
+Price DECIMAL(10, 2),
+Category VARCHAR(50)
+);
+
+
+CREATE TABLE Customer (
+CID INT PRIMARY KEY,
+Cname VARCHAR(100),
+Cust_City VARCHAR(50),
+Cust_State VARCHAR(50)
+);
+
+CREATE TABLE TimeLine (
+TID INT PRIMARY KEY,
+SaleDate DATE,
+SaleDay VARCHAR(10),
+Month VARCHAR(10),
+Year INT
+);
+
+
+
+CREATE TABLE Sales (
+CID INT,
+LID INT,
+TID INT,
+PID INT,
+Quantity INT,
+FOREIGN KEY (CID) REFERENCES Customer(CID),
+FOREIGN KEY (LID) REFERENCES Location(LID),
+FOREIGN KEY (TID) REFERENCES TimeLine(TID),
+FOREIGN KEY (PID) REFERENCES Product(PID)
+);
+
+
+
+-- Insert sample data
+INSERT INTO Location VALUES
+(1, 'New York', 'NY', 'USA');
+
+INSERT INTO Location VALUES
+(2, 'Los Angeles', 'CA', 'USA');
+
+INSERT INTO Location VALUES
+(3, 'Chicago', 'IL', 'USA');
+
+
+
+-- Insert sample data
+INSERT INTO Product VALUES
+(1, 'Product A', 10.99, 'Electronics');
+
+INSERT INTO Product VALUES
+(2, 'Product B', 9.99, 'Clothing');
+
+INSERT INTO Product VALUES
+(3, 'Product C', 12.99, 'Home Goods');
+
+
+
+-- Insert sample data
+INSERT INTO Customer VALUES
+(1, 'John Doe', 'New York', 'NY');
+
+INSERT INTO Customer VALUES
+(2, 'Jane Smith', 'Los Angeles', 'CA');
+
+INSERT INTO Customer VALUES
+(3, 'Bob Johnson', 'Chicago', 'IL');
+
+
+-- Insert sample data
+INSERT INTO TimeLine VALUES
+(1, TO_DATE('2022-01-01', 'YYYY-MM-DD'), 'Monday', 'January', 2022);
+
+INSERT INTO TimeLine VALUES
+(2, TO_DATE('2022-02-01', 'YYYY-MM-DD'), 'Tuesday', 'February', 2022);
+
+INSERT INTO TimeLine VALUES
+(3, TO_DATE('2022-03-01', 'YYYY-MM-DD'), 'Wednesday', 'March', 2022);
+
+
+
+
+
+INSERT INTO Sales VALUES
+(1, 1, 1, 1, 5);
+
+INSERT INTO Sales VALUES
+(2, 2, 2, 2, 10);
+
+INSERT INTO Sales VALUES
+(3, 3, 3, 3, 15);
+
+
+
+
+
+
+-----1. Total Sales by Product Category
+SELECT P.Category, SUM(S.Quantity) AS Total_Sales
+FROM Sales S
+JOIN Product P ON S.PID = P.PID
+GROUP BY P.Category
+
+
+-----2. Sales by Location and Time
+SELECT L.City, T.Year, SUM(S.Quantity) AS Sales
+FROM Sales S
+JOIN Location L ON S.LID = L.LID
+JOIN TimeLine T ON S.TID = T.TID
+GROUP BY L.City, T.Year
+
+
+-----3. Sales Trend by Month
+SELECT L.City, T.Year, SUM(S.Quantity) AS Sales
+FROM Sales S
+JOIN Location L ON S.LID = L.LID
+JOIN TimeLine T ON S.TID = T.TID
+GROUP BY L.City, T.Year
+

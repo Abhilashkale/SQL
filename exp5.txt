@@ -1,0 +1,35 @@
+CREATE TABLE employee (
+  empid NUMBER PRIMARY KEY,
+  name VARCHAR2(50),
+  company VARCHAR2(50),
+  salary NUMBER
+);
+
+
+INSERT INTO employee (empid, name, company, salary) VALUES (1, 'John Doe', 'TCS', 60000);
+INSERT INTO employee (empid, name, company, salary) VALUES (2, 'Jane Smith', 'TCS', 45000);
+INSERT INTO employee (empid, name, company, salary) VALUES (3, 'Alex Brown', 'Infosys', 70000);
+INSERT INTO employee (empid, name, company, salary) VALUES (4, 'Maria Johnson', 'TCS', 55000);
+
+
+
+CREATE OR REPLACE FUNCTION resultemp
+RETURN NUMBER
+IS
+  v_count NUMBER;
+BEGIN
+  SELECT COUNT(*) INTO v_count
+  FROM employee
+  WHERE company = 'TCS' AND salary > 50000;
+ 
+  RETURN v_count;
+END resultemp;
+
+
+
+DECLARE
+  t_count NUMBER;
+BEGIN
+  t_count := resultemp;  -- Call the function and store the result in `t_count`
+  DBMS_OUTPUT.PUT_LINE('Number of TCS employees with salary > 50,000: ' || t_count);
+END;

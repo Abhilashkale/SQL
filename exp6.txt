@@ -1,0 +1,42 @@
+1)
+
+create or replace procedure findsquare(n IN OUT number)
+is
+begin
+    n := n * n;
+end;
+
+
+
+
+declare
+    num number := 5;
+begin
+    findsquare(num);  
+    DBMS_OUTPUT.PUT_LINE(num);
+end;
+
+
+2)
+
+
+create or replace procedure findmax(n1 IN number, n2 IN number, n3 IN number, maxn OUT number)
+is
+begin
+    if n1 > n2 and n1 > n3 then
+        maxn := n1;
+    elsif n2 > n1 and n2 > n3 then
+        maxn := n2;
+    else
+        maxn := n3;
+    end if;
+end;
+
+
+
+declare
+    maxnum number;
+begin
+    findmax(10, 20, 30, maxnum);
+    DBMS_OUTPUT.PUT_LINE('Maximum number is: ' || maxnum);
+end;
